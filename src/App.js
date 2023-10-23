@@ -70,20 +70,70 @@ const App = () => {
     calculateResult();
   };
 
+  const handleSquareRoot = () => {
+    if (currentNumber !== '0') {
+      setCurrentNumber(Math.sqrt(parseFloat(currentNumber)).toString());
+    }
+  };
+  
+  const handlePower = () => {
+    if (firstNumber !== '0' && operation === '^' && currentNumber !== '0') {
+      setCurrentNumber(Math.pow(parseFloat(firstNumber), parseFloat(currentNumber)).toString());
+      setFirstNumber('0');
+      setOperation('');
+    } else {
+      setFirstNumber(currentNumber);
+      setCurrentNumber('0');
+      setOperation('^');
+    }
+  };
+  
+  const handleLogarithm = () => {
+    if (currentNumber !== '0') {
+      setCurrentNumber(Math.log10(parseFloat(currentNumber)).toString());
+    }
+  };
+  
+  const handleTrigonometricFunction = (func) => {
+    if (currentNumber !== '0') {
+      const value = parseFloat(currentNumber);
+      switch (func) {
+        case 'sin':
+          setCurrentNumber(Math.sin(value).toString());
+          break;
+        case 'cos':
+          setCurrentNumber(Math.cos(value).toString());
+          break;
+        case 'tan':
+          setCurrentNumber(Math.tan(value).toString());
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
   return (
     <Container>
       <Content>
         <Input value={currentNumber} />
         <Row>
-          <Button label='*'/>
-          <Button label='*'/>
+          <Button label="√" onClick={handleSquareRoot} />
+          <Button label="x^n" onClick={handlePower} />
+          <Button label="log" onClick={handleLogarithm} />
+          <Button label="sin" onClick={() => handleTrigonometricFunction('sin')} />
+        </Row>
+
+        <Row>
+          <Button label="cos" onClick={() => handleTrigonometricFunction('cos')} />
+          <Button label="tan" onClick={() => handleTrigonometricFunction('tan')} />
           <Button label="." onClick={handleAddDot} />
           <Button label="/" onClick={() => handleMathOperation('/')} />
         </Row>
         <Row>
           <Button label="0" onClick={() => handleAddNumber('0')} />
           <Button label="%" onClick={() => handleMathOperation('%')} />
-          <Button label="C" onClick={handleOnClear} />         
+          <Button label="C" onClick={handleOnClear} />
           <Button label="X" onClick={() => handleMathOperation('X')} />
         </Row>
         <Row>
