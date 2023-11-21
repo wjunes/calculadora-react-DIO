@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const ButtonContainer = styled.button `
     padding: 10px;
+    height: 65px;
     background-color:#008000;
     color: #FFFFFF;
     font-size: 20px;
@@ -14,8 +15,8 @@ export const ButtonContainer = styled.button `
 
     &:hover{
         background-color:#F1F1F1;
-        color: #000000;
-        
+        color: #000000;   
         
     }
+
 `

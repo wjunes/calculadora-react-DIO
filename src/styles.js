@@ -5,7 +5,7 @@ export const Container = styled.div`
     margin: 0 auto;
     width: 90%;
     height: 90vh;
-    background-color: #FFFFFF;
+    background-color: #0f0f0f0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,7 +13,7 @@ export const Container = styled.div`
 `
 
 export const Content = styled.div`
-    background-color:#fff;
+    background-color:#000;
     width: 350px;
     max-height:fit-content;
     border: solid 5px #6b5f5f;

@@ -1,8 +1,11 @@
+
+
+import React, { useState, useEffect } from 'react';
 import Button from './components/Button';
 import Input from './components/Input';
 
+
 import { Container, Content, Row } from './styles';
-import { useState } from 'react';
 
 const App = () => {
   const [currentNumber, setCurrentNumber] = useState('0');
@@ -48,7 +51,7 @@ const App = () => {
         case '-':
           setCurrentNumber((num1 - num2).toString());
           break;
-        case 'X':
+        case `*`:
           setCurrentNumber((num1 * num2).toString());
           break;
         case '/':
@@ -56,6 +59,9 @@ const App = () => {
           break;
         case '%':
           setCurrentNumber((num1 * (num2 / 100)).toString());
+          break;
+        case '^':
+          setCurrentNumber(Math.pow(num1, num2).toString());
           break;
         default:
           break;
@@ -113,8 +119,45 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const key = event.key.toLowerCase();
+
+      if (/\d/.test(key)) {
+        handleAddNumber(key);
+      } else if (['+', '-', `*`, '/'].includes(key)) {
+        handleMathOperation(key);
+      } else if (key === 'enter') {
+        handleEquals();
+      } else if (key === '.') {
+        handleAddDot();
+      } else if (key === 'escape') {
+        handleOnClear();
+      } else if (key === 'q') {
+        handleSquareRoot();
+      } else if (key === 'w') {
+        handlePower();
+      } else if (key === 'e') {
+        handleLogarithm();
+      } else if (key === 'r') {
+        handleTrigonometricFunction('sin');
+      } else if (key === 't') {
+        handleTrigonometricFunction('cos');
+      } else if (key === 'y') {
+        handleTrigonometricFunction('tan');
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleAddNumber, handleMathOperation, handleAddDot, handleEquals, handleOnClear,
+      handleSquareRoot, handlePower, handleLogarithm, handleTrigonometricFunction]);
+
   return (
-    <Container>
+    <Container tabIndex="0" onKeyDown={(e) => e.preventDefault()}>
       <Content>
         <Input value={currentNumber} />
         <Row>
@@ -134,7 +177,7 @@ const App = () => {
           <Button label="0" onClick={() => handleAddNumber('0')} />
           <Button label="%" onClick={() => handleMathOperation('%')} />
           <Button label="C" onClick={handleOnClear} />
-          <Button label="X" onClick={() => handleMathOperation('X')} />
+          <Button label="X" onClick={() => handleMathOperation('*')} />
         </Row>
         <Row>
           <Button label="7" onClick={() => handleAddNumber('7')} />
